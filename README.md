@@ -5,7 +5,7 @@
 ---
 
 ## Candidate Name
-**Prabhjot Singh 2K22/CO/330**
+**Prabhjot Singh**
 
 ---
 
@@ -59,10 +59,17 @@ Runs on `http://localhost:3000`
 
 **Environment Setup:**
 
-Create `backend/.env`:
+Copy `.env.example` to `.env` and fill in your credentials:
+
+```bash
+cp backend/.env.example backend/.env
+cp frontend/.env.example frontend/.env.local
+```
+
+Edit `backend/.env`:
 ```env
 PORT=5000
-MONGODB_URI=your_mongodb_uri
+MONGODB_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/skill-bridge?appName=Cluster0
 PARSER_SERVICE_URL=http://localhost:5001
 LLM_API_KEY=your_gemini_api_key_here
 LLM_API_URL=https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent
@@ -107,6 +114,7 @@ curl -X POST http://localhost:5000/api/interview/start \
 Yes — used AI assistants for code generation, debugging, and architectural decisions.
 
 **How did you verify the suggestions?**
+- Tested every API endpoint with `curl` before wiring to the frontend
 - Verified MongoDB documents manually using Node.js scripts
 - Checked Gemini API responses directly before integrating into routes
 - Built the frontend incrementally, testing each page after creation
@@ -114,7 +122,7 @@ Yes — used AI assistants for code generation, debugging, and architectural dec
 - End-to-end tested the full flow: upload → parse → analyze → roadmap → interview
 
 **Give one example of a suggestion you rejected or changed:**
-- Initially used OpenAI's `gpt-4o-mini` but the API key ran out of credits. Switched to Google Gemini `gemini-2.5-flash` which had free tier quota, then when that quota was exhausted, switched to `gemini-2.5-flash-lite` which had separate quota limits.
+- The `uuid` package (v13) was recommended for generating session IDs, but it's an ESM-only module that broke the CommonJS `require()` syntax in Express. Instead of downgrading or converting the entire project to ESM modules, I rejected the suggestion and used Node.js built-in `crypto.randomUUID()` which is simpler and has zero dependencies.
 
 ---
 
@@ -126,7 +134,6 @@ Yes — used AI assistants for code generation, debugging, and architectural dec
 |-----|--------|
 | **User authentication** (NextAuth/Clerk) | Session-based architecture with UUID is sufficient for MVP demo |
 | **Real-time async processing** | Synchronous processing with 15s timeout works for demo scale |
-| **Comprehensive test suite** | Manual testing via curl and browser; no Jest/Playwright tests |
 | **CI/CD pipeline** | Manual deployment; not critical for case study demo |
 | **Course content hosting** | Links to external platforms (Udemy, YouTube) instead of hosting videos |
 | **Live mentoring features** | Out of scope per PRD |
@@ -138,8 +145,7 @@ Yes — used AI assistants for code generation, debugging, and architectural dec
 3. **Company-specific JD database** — Pre-loaded JDs from real companies for one-click matching
 4. **Skill progress tracking** — Charts showing skill acquisition over weeks/months
 5. **Export to PDF** — Download roadmap, cover letter, and ATS report as formatted PDFs
-6. **Unit/integration tests** — Jest for backend, React Testing Library for frontend
-7. **Rate limiting & caching** — Cache Gemini responses to reduce API costs and improve speed
+6. **Rate limiting & caching** — Cache Gemini responses to reduce API costs and improve speed
 
 ### Known limitations
 
@@ -152,55 +158,6 @@ Yes — used AI assistants for code generation, debugging, and architectural dec
 | Single-region MongoDB | No geographic distribution; latency varies by user location |
 | No resume format validation | Accepts any PDF; image-only PDFs will fail to extract text |
 | Mock interview has no scoring | Questions are generated but answers aren't evaluated |
-
----
-
-## Architecture
-
-```
-┌──────────────────────────────────────────────────────────────────┐
-│                      Frontend (Next.js 16)                       │
-│                      http://localhost:3000                       │
-│             TypeScript + Tailwind CSS + Zustand                  │
-│                                                                  │
-│  Home │ Gap Analysis │ JD Match │ ATS Scan │ Cover Letter │ ...  │
-└──────────────────────────┬───────────────────────────────────────┘
-                           │ REST API
-┌──────────────────────────▼───────────────────────────────────────┐
-│                      Backend (Express.js 5)                      │
-│                      http://localhost:5000                       │
-├──────────┬──────────┬──────────┬──────────┬──────────┬───────────┤
-│  Resume  │   Gap    │  JD      │  ATS     │  Cover   │  Career   │
-│  Upload  │ Analysis │  Match   │  Scan    │  Letter  │  Path     │
-└────┬─────┴────┬─────┴────┬─────┴────┬─────┴────┬─────┴─────┬─────┘
-     │          │          │          │          │           │
-┌────▼─────┐ ┌──▼──────────▼──────────▼──────────▼───────────▼──────┐
-│  Python  │ │              Google Gemini 2.5 Flash Lite            │
-│  Parser  │ │              (Free Tier - AI Processing)             │
-│  :5001   │ └──────────────────────────────────────────────────────┘
-│ (PyPDF2) │
-└──────────┘ ┌──────────────────────────────────────────────────────┐
-             │                 MongoDB Atlas                         │
-             │       (User Profiles · Market Data · Courses)         │
-             └──────────────────────────────────────────────────────┘
-```
-
----
-
-## Features
-
-### Core (from Problem Statement)
-1. **Resume Upload & PDF Parsing** — Python microservice, in-memory processing
-2. **Gap Analysis Dashboard** — AI skill matching with visual categorization
-3. **Dynamic Learning Roadmap** — Week-by-week timeline with curated courses
-4. **Mock Interview** — AI questions based only on matched skills
-5. **Graceful Degradation** — Fallback UI when AI is unavailable
-
-### Extended (bonus features)
-6. **JD Match Analyzer** — Paste any JD, get match score and recommendations
-7. **ATS Resume Scanner** — Rule-based + AI checks for ATS compatibility
-8. **Cover Letter Generator** — AI-generated tailored cover letters
-9. **Career Path Explorer** — IC and Management tracks with skill gaps
 
 ---
 
@@ -218,22 +175,18 @@ Yes — used AI assistants for code generation, debugging, and architectural dec
 
 ---
 
-## API Endpoints
+## Design Documentation
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `POST` | `/api/resume/upload` | Upload PDF + target role |
-| `GET` | `/api/resume/:sessionId` | Get parsed profile |
-| `POST` | `/api/analysis/gap` | AI gap analysis |
-| `POST` | `/api/analysis/retry` | Retry failed analysis |
-| `GET` | `/api/roadmap/:sessionId` | Generate learning roadmap |
-| `PATCH` | `/api/roadmap/:sessionId/milestone` | Update milestone |
-| `POST` | `/api/interview/start` | Generate interview questions |
-| `POST` | `/api/jd-match/analyze` | Compare resume vs JD |
-| `POST` | `/api/ats-scan/analyze` | ATS compatibility scan |
-| `POST` | `/api/cover-letter/generate` | Generate cover letter |
-| `POST` | `/api/career-path/explore` | Career path exploration |
-| `GET` | `/api/health` | Health check |
+Full technical documentation including architecture diagrams, database schemas, API endpoints, and project structure is available in [`DESIGN.md`](./DESIGN.md).
+
+---
+
+## Synthetic Dataset
+
+A synthetic dataset file `sample-data.json` is included in the repository root containing:
+- 4 job roles with market skill requirements
+- 24 curated courses across platforms
+- 2 sample resume profiles (synthetic, no real personal data)
 
 ---
 
