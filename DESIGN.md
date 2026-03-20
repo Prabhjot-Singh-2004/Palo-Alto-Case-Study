@@ -76,7 +76,7 @@ Students and early-career professionals frequently struggle to translate their a
 
 ## Features
 
-### Core (from PRD)
+### Core (from Problem Statement)
 
 #### 1. Resume Upload & PDF Parsing
 - Drag-and-drop PDF upload with file validation
@@ -350,7 +350,7 @@ Resumes are never stored on disk:
 | Variable | Description | Example |
 |----------|-------------|---------|
 | `PORT` | Backend server port | `5000` |
-| `MONGODB_URI` | MongoDB connection string | `mongodb+srv://user:pass@cluster.mongodb.net/skill-bridge` |
+| `MONGODB_URI` | MongoDB connection string | `your_mongodb_uri` |
 | `PARSER_SERVICE_URL` | Python parser service URL | `http://localhost:5001` |
 | `LLM_API_KEY` | Google Gemini API key | `AIzaSy...` |
 | `LLM_API_URL` | Gemini API endpoint | `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent` |
@@ -375,16 +375,6 @@ A standalone `sample-data.json` file is also included in the repository root for
 
 ---
 
-## Success Metrics (KPIs)
-
-| Metric | Definition | Target |
-|--------|-----------|--------|
-| Roadmap Completion Rate | % of users who mark at least 1 milestone complete within 7 days | > 40% |
-| Parsing Accuracy Rate | Number of manual edits to matched skills after parsing | < 3 edits |
-| Graceful Degradation Rate | % of sessions showing fallback UI | < 2% |
-| AI Response Time | Time for gap analysis to return results | < 15 seconds |
-
----
 
 ## Author
 
