@@ -103,7 +103,8 @@ curl -X POST http://localhost:5000/api/interview/start \
 ## AI Disclosure
 
 **Did you use an AI assistant (Copilot, ChatGPT, etc.)?**
--Yes — used AI assistants extensively for code generation, debugging, and architectural decisions.
+
+Yes — used AI assistants for code generation, debugging, and architectural decisions.
 
 **How did you verify the suggestions?**
 - Verified MongoDB documents manually using Node.js scripts
@@ -113,7 +114,7 @@ curl -X POST http://localhost:5000/api/interview/start \
 - End-to-end tested the full flow: upload → parse → analyze → roadmap → interview
 
 **Give one example of a suggestion you rejected or changed:**
-- Initially used OpenAI's `gpt-4o-mini` but the API key had no credits. Switched to Google Gemini `gemini-2.5-flash` which had free tier quota, then when that quota was exhausted, switched to `gemini-2.5-flash-lite` which had separate quota limits.
+- Initially used OpenAI's `gpt-4o-mini` but the API key ran out of credits. Switched to Google Gemini `gemini-2.5-flash` which had free tier quota, then when that quota was exhausted, switched to `gemini-2.5-flash-lite` which had separate quota limits.
 
 ---
 
@@ -188,7 +189,7 @@ curl -X POST http://localhost:5000/api/interview/start \
 
 ## Features
 
-### Core (from PRD)
+### Core (from Problem Statement)
 1. **Resume Upload & PDF Parsing** — Python microservice, in-memory processing
 2. **Gap Analysis Dashboard** — AI skill matching with visual categorization
 3. **Dynamic Learning Roadmap** — Week-by-week timeline with curated courses
