@@ -103,7 +103,7 @@ curl -X POST http://localhost:5000/api/interview/start \
 ## AI Disclosure
 
 **Did you use an AI assistant (Copilot, ChatGPT, etc.)?**
-Yes — used AI assistants extensively for code generation, debugging, and architectural decisions.
+-Yes — used AI assistants extensively for code generation, debugging, and architectural decisions.
 
 **How did you verify the suggestions?**
 - Verified MongoDB documents manually using Node.js scripts
