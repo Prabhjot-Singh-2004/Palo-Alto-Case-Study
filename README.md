@@ -443,7 +443,7 @@ The `npm run seed` command populates MongoDB with:
 | Variable | Description | Example |
 |----------|-------------|---------|
 | `PORT` | Backend server port | `5000` |
-| `MONGODB_URI` | MongoDB connection string | `mongodb+srv://user:pass@cluster.mongodb.net/skill-bridge` |
+| `MONGODB_URI` | MongoDB connection string | `your mongodb uri` |
 | `PARSER_SERVICE_URL` | Python parser service URL | `http://localhost:5001` |
 | `LLM_API_KEY` | Google Gemini API key | `AIzaSy...` |
 | `LLM_API_URL` | Gemini API endpoint | `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent` |
