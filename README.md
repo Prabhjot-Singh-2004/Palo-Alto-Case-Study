@@ -5,7 +5,7 @@
 ---
 
 ## Candidate Name
-**Prabhjot Singh**
+**Prabhjot Singh 2K22/CO/330**
 
 ---
 
@@ -17,7 +17,7 @@ Students and early-career professionals frequently struggle to translate their a
 ---
 
 ## Estimated Time Spent
-**~10-12 hours** (including debugging, API integration, and feature extensions beyond the original PRD)
+**~5-6 hours** (including debugging, API integration, and feature extensions beyond the original PRD)
 
 ---
 
@@ -62,7 +62,7 @@ Runs on `http://localhost:3000`
 Create `backend/.env`:
 ```env
 PORT=5000
-MONGODB_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/skill-bridge?appName=Cluster0
+MONGODB_URI=your_mongodb_uri
 PARSER_SERVICE_URL=http://localhost:5001
 LLM_API_KEY=your_gemini_api_key_here
 LLM_API_URL=https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent
@@ -106,7 +106,6 @@ curl -X POST http://localhost:5000/api/interview/start \
 Yes — used AI assistants extensively for code generation, debugging, and architectural decisions.
 
 **How did you verify the suggestions?**
-- Tested every API endpoint with `curl` before wiring to the frontend
 - Verified MongoDB documents manually using Node.js scripts
 - Checked Gemini API responses directly before integrating into routes
 - Built the frontend incrementally, testing each page after creation
@@ -114,7 +113,6 @@ Yes — used AI assistants extensively for code generation, debugging, and archi
 - End-to-end tested the full flow: upload → parse → analyze → roadmap → interview
 
 **Give one example of a suggestion you rejected or changed:**
-- The initial `uuid` package (v13) was suggested as an ESM-only module that broke the CommonJS `require()` syntax in Express. I replaced it with Node.js built-in `crypto.randomUUID()` instead of downgrading or converting the entire project to ESM modules.
 - Initially used OpenAI's `gpt-4o-mini` but the API key had no credits. Switched to Google Gemini `gemini-2.5-flash` which had free tier quota, then when that quota was exhausted, switched to `gemini-2.5-flash-lite` which had separate quota limits.
 
 ---
