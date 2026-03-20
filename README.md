@@ -5,7 +5,7 @@
 ---
 
 ## Candidate Name
-**Prabhjot Singh**
+**Prabhjot Singh 2K22/CO/330**
 
 ---
 
@@ -69,7 +69,7 @@ cp frontend/.env.example frontend/.env.local
 Edit `backend/.env`:
 ```env
 PORT=5000
-MONGODB_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/skill-bridge?appName=Cluster0
+MONGODB_URI=your_mongodb_uri
 PARSER_SERVICE_URL=http://localhost:5001
 LLM_API_KEY=your_gemini_api_key_here
 LLM_API_URL=https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent
