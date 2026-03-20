@@ -7,6 +7,8 @@
 ## Candidate Name
 **Prabhjot Singh 2K22/CO/330**
 
+Youtube Video demo link: https://youtu.be/HDyh7GFZGWI
+
 ---
 
 ## Scenario Chosen
