@@ -167,7 +167,7 @@ Create a `.env` file in the `backend/` directory:
 
 ```env
 PORT=5000
-MONGODB_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/skill-bridge?appName=Cluster0
+MONGODB_URI=your mongodb uri
 PARSER_SERVICE_URL=http://localhost:5001
 LLM_API_KEY=your_gemini_api_key_here
 LLM_API_URL=https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent
